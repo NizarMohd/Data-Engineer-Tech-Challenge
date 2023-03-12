@@ -259,7 +259,8 @@ if __name__ == '__main__':
     """
     This code block checks if the current script is being run as the main program. If so, runs the job every hour"""
     # If this script is being run as the main program
-    schedule.every().hour.do()
+    schedule.every().hour.do(run_job)
     while True:
         schedule.run_pending()
         time.sleep(1)
+
