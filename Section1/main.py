@@ -4,6 +4,12 @@ from hashlib import sha256
 import csv
 import os, os.path
 from dateutil import parser
+import schedule
+import re
+from datetime import datetime
+from hashlib import sha256
+import time
+
 
 NAME = "name"
 DOB = "date_of_birth"
@@ -15,9 +21,7 @@ fail_header = ["name", "email", "date_of_birth", "mobile_no", "reason"]
 success_header = ["first_name", "last_name", "above_18", "membership_ID", "email", "date_of_birth", "mobile_no"]
 salutations = ["Mr.", "Ms.", "Mrs.", "DVM", "MD", "DDS", "PhD", "Mdm.", "Dr.", "Miss"]
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
-import re
-from datetime import datetime
-from hashlib import sha256
+
 
 
 success = open("success/success.csv", "w", newline='')
@@ -153,6 +157,7 @@ def read_csv(filename):
     return out
 
 
+
 def generate_failed_applicant(data, reason):
     """
     Generates a row in the output file for failed applicants, with the provided reason.
@@ -232,15 +237,14 @@ def generate_csv(data):
     membership_id = last.strip() + "_" + str(hash).strip()
     generate_successul_applicants(first, last, above_18, membership_id,email, birthday, mobile_no)
 
-if __name__ == '__main__':
+def run_job():
     """
-    This code block checks if the current script is being run as the main program, and if so, it loops through all 
+    it loops through all
     files in the "in" directory and reads each file as a CSV using the read_csv() function. Then, for each row in the
     CSV, the generate_csv() function is called to generate a membership ID and check if the data is valid. If the data
      is valid, it is written to the successful applicants CSV file using the generate_successul_applicants() function.
     Otherwise, it is written to the failed applicants CSV file using the generate_failed_applicant() function.
       """
-    # If this script is being run as the main program
     # Loop through all files in the "in" directory
     for filename in os.listdir("in"):
         # Read the CSV file and store the data as a list of rows
@@ -250,3 +254,12 @@ if __name__ == '__main__':
             # Generate a membership ID and check if the data is valid
             generate_csv(item)
 
+
+if __name__ == '__main__':
+    """
+    This code block checks if the current script is being run as the main program. If so, runs the job every hour"""
+    # If this script is being run as the main program
+    schedule.every().hour.do()
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
