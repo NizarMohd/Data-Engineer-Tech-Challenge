@@ -1,112 +1,48 @@
-# Data Engineer Tech Challenge
+Introduction
+This Python script is designed to read in a CSV file containing customer data and validate the data before writing the valid data to a new CSV file called "success.csv" and the invalid data to a new CSV file called "fail.csv".
 
-This test is split into 5 sections
+The script uses the following Python modules:
 
-1. **data pipelines**
-2. **databases**
-3. **system design**
-4. **charts & APIs**
-5. **machine learning**
+re: regular expressions library
+datetime: module to work with dates and times
+hashlib: module to work with secure hashes and message digests
+csv: module to work with CSV files
+os: module to work with operating system dependent functionality
+os.path: submodule of os to work with paths in a portable way
+dateutil: library to work with dates and times
+Variables
+The script defines the following variables:
 
-## Submission Guidelines
+NAME: a string constant representing the "name" header for the CSV file
+DOB: a string constant representing the "date_of_birth" header for the CSV file
+EMAIL: a string constant representing the "email" header for the CSV file
+MOBILE_NO: a string constant representing the "mobile_no" header for the CSV file
+format: a string representing the format of the dates used in the CSV file
+in_header: an empty dictionary which will later be populated with the headers of the input CSV file
+fail_header: a list representing the headers of the output CSV file for invalid data
+success_header: a list representing the headers of the output CSV file for valid data
+salutations: a list representing common salutations to be removed from customer names
+regex: a regular expression pattern used to validate email addresses
 
-Please create a Github repository containing your submission and send us an email containing a link to the repository.
+The following code imports the required libraries: re, datetime, sha256, csv, os, and dateutil.parser. It also defines some constants such as the header names for input and output files, the date format to be used, and a list of salutations to be removed from names.
 
-Dos:
+The script then opens two csv files, 'success.csv' and 'fail.csv', in write mode, with the 'newline' parameter set to an empty string. It also initializes two csv writer objects with the headers of the two csv files.
 
-- Frequent commits
-- Descriptive commit messages
-- Clear documentation
-- Comments in your code
+The script defines several helper functions that perform different validations and transformations on input data.
 
-Donts:
+The first helper function is 'check_mobile_number'. It takes in a string parameter 'number' and checks if it is a valid mobile number. A valid mobile number is an 8-digit number. If the number is valid, the function returns True, otherwise it returns False.
 
-- Only one commit containing all the files
-- Submitting a zip file
-- Sparse or absent documentation
-- Code which is hard to read
+The second helper function is 'check_age'. It takes in a parameter 'birthday' in the format '%m/%d/%y' and calculates the age based on the current date. If the age is greater than 18, the function returns True, otherwise it returns False.
 
----
+The third helper function is 'clean_time'. It takes in a date parameter 'date' in the format '%m/%d/%y' or '%m-%d-%y' and returns a datetime object in the format '%Y/%m/%d'.
 
-## Section 1: Data Pipelines
+The fourth helper function is 'check_email'. It takes in a string parameter 'email' and checks if it is a valid email address. A valid email address must have a domain of either 'com' or 'net'. If the email address is valid, the function returns True, otherwise it returns False.
 
-An e-commerce company requires that users sign up for a membership on the website in order to purchase a product from the platform. As a data engineer under this company, you are tasked with designing and implementing a pipeline to process the membership applications submitted by users on an hourly interval.
+The fifth helper function is 'filterSalutations'. It takes in a string parameter 'name' and removes any salutations from the name. The function then returns the first and last names as separate strings.
 
-Applications are batched into a varying number of datasets and dropped into a folder on an hourly basis. You are required to set up a pipeline to ingest, clean, perform validity checks, and create membership IDs for successful applications. An application is successful if:
+The sixth helper function is 'check_name'. It checks if a given name is valid. If the name is None or empty, the function returns False, otherwise it returns True.
 
-Application mobile number is 8 digits
-Applicant is over 18 years old as of 1 Jan 2022
-Applicant has a valid email (email ends with @emailprovider.com or @emailprovider.net)
-You are required to format datasets in the following manner:
+The seventh helper function is 'read_csv'. It reads a CSV file and returns the data as a list of rows.
 
-Split name into first_name and last_name
-Format birthday field into YYYYMMDD
-Remove any rows which do not have a name field (treat this as unsuccessful applications)
-Create a new field named above_18 based on the applicant's birthday
-Membership IDs for successful applications should be the user's last name, followed by a SHA256 hash of the applicant's birthday, truncated to first 5 digits of hash (i.e <last_name>_<hash(YYYYMMDD)>)
-You are required to consolidate these datasets and output the successful applications into a folder, which will be picked up by downstream engineers. Unsuccessful applications should be condolidated and dropped into a separate folder.
+Overall, the script performs validation and transformation operations on input data and writes the results to the 'success.csv' and 'fail.csv' files. The 'success.csv' file contains data that passed all the validation checks, while the 'fail.csv' file contains data that failed at least one validation check, along with a reason for the failure.
 
-You can use common scheduling solutions such as cron or airflow to implement the scheduling component. Please provide a markdown file as documentation.
-
-Note: Please submit the processed dataset and scripts used
-
----
-
-## Section 2: Databases
-
-You are appointed by the above e-commerce company to create a database infrastructure for their sales transactions. Purchases are being made by members of the e-commerce company on their website (you may use the first 50 members of a processed dataset from Section 1). Members can make multiple purchases. 
-
-The following are known for each item listed for sale on the e-commerce website:
-- Item Name
-- Manufacturer Name
-- Cost
-- Weight (in kg)
-
-Each transaction made by a member contains the following information:
-- Membership ID
-- Items bought (could be one item or multiple items)
-- Total items price
-- Total items weight
-
-Set up a PostgreSQL database using the Docker [image](https://hub.docker.com/_/postgres) provided. We expece at least a Dockerfile which will stand up your database with the DDL statements to create the necessary tables. You are required to produce  entity-relationship diagrams as necessary to illustrate your design. 
-
-Analysts from the e-commerce company will need to query some information from the database. Below are 2 of the sameple queries from the analysts. Do note to design your database to account for a wide range of business use cases and queries. 
-You are tasked to write a SQL statement for each of the following task:
-1. Which are the top 10 members by spending
-2. Which are the top 3 items that are frequently brought by members
-
----
-
-## Section 3: System Design
-
-You are designing data infrastructure on the cloud for a company whose main business is in processing images.
-
-The company has a web application which allows users to upload images to the cloud using an API. There is also a separate web application which hosts a Kafka stream that uploads images to the same cloud environment. This Kafka stream has to be managed by the company's engineers.
-
-Code has already been written by the company's software engineers to process the images. This code has to be hosted on the cloud. For archival purposes, the images and its metadata has to be stored in the cloud environment for 7 days, after which it has to be purged from the environment for compliance and privacy. The cloud environment should also host a Business Intelligence resource where the company's analysts can access and perform analytical computation on the data stored.
-
-As a data engineer within the company, you are required to produce a system architecture diagram (Visio, PowerPoint, draw.io) depicting the end-to-end flow of the aforementioned pipeline. You may use any of the cloud providers (e.g. AWS, Azure, GCP) to host the environment. The architecture should specifically address the requirements/concerns above.
-
-Do indicate any assumptions you have made regarding the architecture. You are required to provide a detailed explanation on the diagram.
-
----
-## Section 4: Charts & APIs
-Your team decided to design a dashboard to display the statistic of COVID19 cases. You are tasked to display one of the components of the dashboard which is to display a visualisation representation of number of COVID19 cases in Singapore over time.
-
-Your team decided to use the public data from https://documenter.getpostman.com/view/10808728/SzS8rjbc#b07f97ba-24f4-4ebe-ad71-97fa35f3b683.
-
-Display a graph to show the number cases in Singapore over time using the APIs from https://covid19api.com/.
-
-Note: please submit screenshots of the dashboard
-
----
-
-
-## Section 5: Machine Learning
-Using the dataset from https://archive.ics.uci.edu/ml/datasets/Car+Evaluation, create a machine learning model to predict the buying price given the following parameters:
-
-Maintenance = High <br>
-Number of doors = 4 <br>
-Lug Boot Size = Big <br>
-Safety = High <br>
-Class Value = Good <br>
