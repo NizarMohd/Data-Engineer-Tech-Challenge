@@ -1,5 +1,8 @@
 # **Items Table:**
 
+## Link to image:
+[Postgres Image](https://drive.google.com/file/d/1UlqdhgLJW562obU4uUWEVns3imTw1TpB/view)
+
 ## Description:
 
 The Items table is a collection of all the products available for purchase on an online marketplace. Each item is uniquely identified by its Item ID. This table contains the following attributes:
