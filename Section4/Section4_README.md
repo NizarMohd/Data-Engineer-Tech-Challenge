@@ -17,4 +17,5 @@ This function takes a list of dictionaries as input and converts it to a CSV fil
 The main driver code executes the program. It first calls the `get_data()` function to retrieve COVID19 data from an API and saves it in a CSV file using the `convert_to_csv(data)` function. Then it generates a dashboard to display the data using the `generate_dashboard()` function. Finally, it runs the dashboard server in debug mode using the `run_server()` method of the app object. The `if __name__ == '__main__':` statement ensures that this code block only runs if this script is executed as the main program.
 
 Screenshot of dashboard:
+
 ![alt text](img_1.png)
