@@ -14,13 +14,14 @@ Cost: The cost of the item in USD
 
 Weight: The weight of the item in grams
 
-#**Transactions Table:**
+# **Transactions Table:**
 
-##Description:
+## Description:
 
 The Transactions table is a record of all purchases made by customers on an online marketplace. Each transaction is uniquely identified by its Transaction ID. This table contains the following attributes:
 
-###Columns:
+
+### Columns:
 Membership ID: The ID of the customer who made the purchase
 
 Item_Bought: The item purchased
@@ -29,7 +30,8 @@ Purchase Price: The price paid for the item in USD
 
 Weight: The weight of the items purchased in the transaction
 
-###Queries:
+
+### Queries:
 
 Query to select top 10 membership IDs that spent the most money:
 
@@ -50,4 +52,6 @@ ORDER BY Total_Quantity DESC;
 
 This query will return the top 3 items that were purchased the most by all members on the online marketplace.
 
-ERD: ![alt text](ERD.png)
+ERD:
+
+![alt text](ERD.png)
