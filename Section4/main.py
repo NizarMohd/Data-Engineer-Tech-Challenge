@@ -1,10 +1,8 @@
-import dash
+
 from dash import dcc, html, Dash
-import plotly.express as px
 import pandas as pd
-import seaborn as sns
 import requests
-import json
+
 import csv
 from datetime import datetime
 
