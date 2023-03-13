@@ -13,6 +13,7 @@ persons: Number of persons that can be seated in the car (2, 4, more)
 lug_boot: Size of the luggage boot (small, med, big)
 safety: Safety rating of the car (low, med, high)
 class: Classification of the car (unacc, acc, good, vgood)
+
 Model:
 We will build a decision tree classifier to predict the buying price of the car. Decision trees are a powerful and interpretable machine learning algorithm that work well with categorical data.
 

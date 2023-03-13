@@ -86,10 +86,10 @@ def train():
     X = oe.fit_transform(data[['maint_cost', 'doors', 'lug_boot', 'safety', 'class']])
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=2)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=2)
 
     # Create a decision tree classifier object and fit it to the training data
-    DT_classifier = DecisionTreeClassifier(criterion='gini', max_depth=3, min_samples_split=10)
+    DT_classifier = DecisionTreeClassifier(criterion='gini', max_depth=2, min_samples_split=500)
     DT_classifier.fit(X_train, y_train)
 
     # Use the classifier to make predictions on the test data and calculate the accuracy
