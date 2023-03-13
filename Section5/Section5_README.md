@@ -1,7 +1,7 @@
 # Documentation for Car Evaluation Model:
 
 ## Introduction:
-The Car Evaluation dataset contains information about various cars and their specifications such as buying price, maintenance cost, number of doors, number of seats, etc. The objective of this model is to predict the buying price of a car based on its specifications.
+The Car Evaluation dataset contains information about various cars and their specifications such as buying price, maintenance cost, number of doors, number of seats, etc. The objective of this model is to predict the buying price of a car based on its specifications. Run the predictor.py script to obtain prediction.
 
 ## Data:
 The dataset is available at the following link: https://archive.ics.uci.edu/ml/datasets/Car+Evaluation. It contains 1728 rows and 7 columns. The columns in the dataset are as follows:
@@ -21,7 +21,7 @@ We will build a decision tree classifier to predict the buying price of the car.
 The dataset will be preprocessed by converting categorical variables to numerical values using one-hot encoding. This will create additional columns for each categorical variable with binary values indicating the presence or absence of that variable. For example, the 'buying' column will be split into four columns 'buying_low', 'buying_med', 'buying_high', and 'buying_vhigh', with binary values indicating if the buying price is low, med, high, or vhigh.
 
 ## Training:
-The model will be trained using the preprocessed dataset. We will split the dataset into training and testing sets with a 70:30 ratio. The decision tree classifier will be trained on the training set and evaluated on the testing set. It is worthy to note that the person capacity is the weakest feature as seen in the ipynb file.
+The model will be trained using the preprocessed dataset. We will split the dataset into training and testing sets with a 70:30 ratio. The decision tree classifier will be trained on the training set and evaluated on the testing set. It is worthy to note that the person capacity is the weakest feature as seen in the ipynb file. Also, predicting the buying price with the given dataset has a predictability of 30% using MLP or DT. Hence the prediction is really inaccurate.
 
 ## Evaluation:
 We will evaluate the model's performance using accuracy, precision, recall, and F1-score. The confusion matrix will also be generated to visualize the performance of the model.
