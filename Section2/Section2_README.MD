@@ -39,7 +39,7 @@ Weight: The weight of the items purchased in the transaction
 Query to select top 10 membership IDs that spent the most money:
 
 SELECT TOP 10 Membership_ID, SUM(Purchase_Price * Quantity) AS Total_Spent
-FROM Transactions
+FROM Transaction
 GROUP BY Membership_ID
 ORDER BY Total_Spent DESC;
 
@@ -49,7 +49,7 @@ This query will return the top 10 membership IDs that spent the most money on th
 Query to find the top 3 items bought by all members:
 
 SELECT TOP 3 Item_ID, SUM(Quantity) AS Total_Quantity
-FROM Transactions
+FROM Transaction
 GROUP BY Item_ID
 ORDER BY Total_Quantity DESC;
 
